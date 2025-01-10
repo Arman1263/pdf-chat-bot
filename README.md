@@ -48,4 +48,6 @@ This project is a **Streamlit-based application** that allows users to interacti
 1. Pickle Deserialization Warning: Ensure FAISS index files are from trusted sources. If encountering a ValueError, delete the faiss_index folder and reprocess the PDFs.
 2. Large PDFs: Processing very large PDFs may take additional time.
 
+![PDF Chat Bot](https://github.com/Arman1263/pdf-chat-bot/blob/b085a67deffffa3e052493ff5aa4afcd94e7ea58/7.png)
+
 ## So called Arman😇
