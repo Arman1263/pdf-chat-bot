@@ -4,6 +4,9 @@ Upload the PDF Files and ask questions
 ## To see Preview
 https://pdf-chat-bot-arman.streamlit.app/
 
+# Also hosted on Huggingface 
+https://huggingface.co/spaces/MrHalk/pdf-chat-bot
+
 # Chat with PDF using Gemini 💁
 
 This project is a **Streamlit-based application** that allows users to interactively chat with PDF documents using Google's Gemini AI. It enables users to upload PDF files, process them, and ask questions based on the content of the files.
