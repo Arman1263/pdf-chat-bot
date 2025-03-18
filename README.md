@@ -5,7 +5,7 @@ Upload the PDF Files and ask questions
 https://pdf-chat-bot-arman.streamlit.app/
 
 # Also hosted on Huggingface 
-https://huggingface.co/spaces/MrHalk/pdf-chat-bot
+https://huggingface.co/spaces/MrHalk/PDF-Chat-Bot
 
 # Chat with PDF using Gemini 💁
 
