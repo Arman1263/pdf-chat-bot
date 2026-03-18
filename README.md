@@ -4,6 +4,24 @@ An AI-powered chatbot that allows users to upload PDF documents and ask natural 
 
 ---
 
+## 🌐 Live Demo
+
+👉 [pdf-chat-bot-arman.streamlit.app](https://pdf-chat-bot-arman.streamlit.app/)
+
+---
+
+## 📸 Snapshots
+
+**Home — Ready to query**
+
+![PDF Chat Bot Home](snapshots/snapshot1.png)
+
+**Response — Answering from document**
+
+![PDF Chat Bot Response](snapshots/snapshot.png)
+
+---
+
 ## 🚀 Project Overview
 
 ### 📌 Problem Statement
@@ -62,6 +80,7 @@ PDF_Chat_Bot/
 │
 ├── main.py               # Main application file
 ├── requirements.txt      # Python dependencies
+├── snapshots/            # App screenshots
 ├── .env                  # API keys (not pushed to GitHub)
 ├── .gitignore            # Files ignored by git
 └── README.md             # Project documentation
@@ -114,7 +133,7 @@ streamlit run main.py
 
 1. Open the app in your browser
 2. Upload one or more PDF files using the sidebar
-3. Click **Submit & Process** to index the PDFs
+3. Click **Process Documents** to index the PDFs
 4. Type your question in the input box
 5. Click **Submit Question** to get an answer
 
