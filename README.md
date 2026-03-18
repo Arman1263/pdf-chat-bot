@@ -14,11 +14,11 @@ An AI-powered chatbot that allows users to upload PDF documents and ask natural 
 
 **Home — Ready to query**
 
-![PDF Chat Bot Home](snapshots/snapshot1.png)
+![PDF Chat Bot Home](snapshots/1.png)
 
 **Response — Answering from document**
 
-![PDF Chat Bot Response](snapshots/snapshot.png)
+![PDF Chat Bot Response](snapshots/2.png)
 
 ---
 
