@@ -13,7 +13,209 @@ load_dotenv()
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
+# ── Page config ──────────────────────────────────────────────────────────────
+st.set_page_config(
+    page_title="PDF Chat Bot",
+    page_icon="⬡",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
+# ── Global CSS ────────────────────────────────────────────────────────────────
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap');
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, [data-testid="stAppViewContainer"] {
+    background-color: #050a12 !important;
+    color: #c8d8e8 !important;
+    font-family: 'Syne', sans-serif !important;
+}
+
+[data-testid="stAppViewContainer"] {
+    background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,180,255,0.08) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0,180,255,0.02) 40px, rgba(0,180,255,0.02) 41px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,180,255,0.02) 40px, rgba(0,180,255,0.02) 41px);
+    background-attachment: fixed;
+}
+
+/* ── Hide Streamlit chrome ── */
+#MainMenu, footer, header { visibility: hidden; }
+[data-testid="stToolbar"] { display: none; }
+.block-container {
+    padding: 2rem 2.5rem 4rem !important;
+    max-width: 960px !important;
+}
+
+/* ── Sidebar ── */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #070e1a 0%, #050a12 100%) !important;
+    border-right: 1px solid rgba(0,180,255,0.15) !important;
+}
+[data-testid="stSidebar"]::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, #00b4ff, #0050ff, transparent);
+    margin-bottom: 1rem;
+}
+[data-testid="stSidebar"] .block-container {
+    padding: 1.5rem 1.2rem !important;
+}
+
+/* ── Sidebar title ── */
+.sidebar-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #00b4ff;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(0,180,255,0.2);
+}
+
+/* ── File uploader ── */
+[data-testid="stFileUploader"] {
+    background: rgba(0,180,255,0.04) !important;
+    border: 1px dashed rgba(0,180,255,0.25) !important;
+    border-radius: 8px !important;
+    padding: 0.5rem !important;
+    transition: border-color 0.3s;
+}
+[data-testid="stFileUploader"]:hover {
+    border-color: rgba(0,180,255,0.5) !important;
+}
+[data-testid="stFileUploader"] label {
+    color: #7aa8c8 !important;
+    font-size: 0.82rem !important;
+}
+
+/* ── Buttons ── */
+.stButton > button {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    background: transparent !important;
+    border: 1px solid rgba(0,180,255,0.4) !important;
+    color: #00b4ff !important;
+    border-radius: 4px !important;
+    padding: 0.5rem 1.2rem !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+}
+.stButton > button:hover {
+    background: rgba(0,180,255,0.1) !important;
+    border-color: #00b4ff !important;
+    box-shadow: 0 0 18px rgba(0,180,255,0.2) !important;
+    color: #fff !important;
+}
+.stButton > button:active {
+    transform: scale(0.98) !important;
+}
+
+/* ── Text input ── */
+[data-testid="stTextInput"] input {
+    background: rgba(0,180,255,0.04) !important;
+    border: 1px solid rgba(0,180,255,0.2) !important;
+    border-radius: 6px !important;
+    color: #c8d8e8 !important;
+    font-family: 'Syne', sans-serif !important;
+    font-size: 0.95rem !important;
+    padding: 0.65rem 1rem !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+[data-testid="stTextInput"] input:focus {
+    border-color: #00b4ff !important;
+    box-shadow: 0 0 0 2px rgba(0,180,255,0.12) !important;
+    outline: none !important;
+}
+[data-testid="stTextInput"] input::placeholder {
+    color: #3a5a7a !important;
+}
+[data-testid="stTextInput"] label {
+    color: #7aa8c8 !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* ── Spinner ── */
+[data-testid="stSpinner"] {
+    color: #00b4ff !important;
+}
+
+/* ── Success / Warning ── */
+[data-testid="stAlert"] {
+    background: rgba(0,180,255,0.06) !important;
+    border: 1px solid rgba(0,180,255,0.2) !important;
+    border-radius: 6px !important;
+    color: #c8d8e8 !important;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #050a12; }
+::-webkit-scrollbar-thumb { background: rgba(0,180,255,0.2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,180,255,0.4); }
+</style>
+""", unsafe_allow_html=True)
+
+
+# ── Header ────────────────────────────────────────────────────────────────────
+st.markdown("""
+<div style="margin-bottom: 2.5rem;">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:0.4rem;">
+        <div style="
+            width:36px; height:36px;
+            background: linear-gradient(135deg, #00b4ff22, #0050ff22);
+            border: 1px solid rgba(0,180,255,0.4);
+            border-radius: 8px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:1.1rem;">⬡</div>
+        <div>
+            <div style="
+                font-family:'Space Mono',monospace;
+                font-size:0.65rem;
+                letter-spacing:0.3em;
+                text-transform:uppercase;
+                color:#00b4ff;
+                margin-bottom:2px;">
+                RAG · FAISS · OpenRouter · By Arman
+            </div>
+            <h1 style="
+                font-family:'Syne',sans-serif;
+                font-size:1.75rem;
+                font-weight:800;
+                color:#e8f4ff;
+                margin:0;
+                line-height:1;
+                letter-spacing:-0.02em;">
+                PDF Chat Bot
+            </h1>
+        </div>
+    </div>
+    <div style="
+        height:1px;
+        background: linear-gradient(90deg, rgba(0,180,255,0.4), rgba(0,80,255,0.2), transparent);
+        margin-top:1rem;">
+    </div>
+    <p style="
+        color:#4a7a9a;
+        font-size:0.82rem;
+        margin-top:0.6rem;
+        letter-spacing:0.02em;">
+        Upload PDFs · Ask questions · Get precise answers from your documents
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+
+# ── Core functions ─────────────────────────────────────────────────────────────
 def get_pdf_text(pdf_docs):
     text = ""
     for pdf in pdf_docs:
@@ -67,41 +269,125 @@ def user_input(user_question):
     chain = get_conversational_chain(model)
     response = chain.invoke({"context": context, "question": user_question})
 
-    print(response)
-    st.write("Reply: ", response)
+    # Display answer card
+    st.markdown(f"""
+    <div style="
+        background: linear-gradient(135deg, rgba(0,180,255,0.05), rgba(0,50,100,0.08));
+        border: 1px solid rgba(0,180,255,0.18);
+        border-left: 3px solid #00b4ff;
+        border-radius: 8px;
+        padding: 1.2rem 1.4rem;
+        margin-top: 1rem;
+        font-family: 'Syne', sans-serif;
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: #c8d8e8;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 0 40px rgba(0,180,255,0.02);
+    ">
+        <div style="
+            font-family:'Space Mono',monospace;
+            font-size:0.6rem;
+            letter-spacing:0.25em;
+            text-transform:uppercase;
+            color:#00b4ff;
+            margin-bottom:0.7rem;
+            opacity:0.8;">
+            ◈ Response
+        </div>
+        {response}
+    </div>
+    """, unsafe_allow_html=True)
 
 
-def main():
-    st.set_page_config("Chat PDF")
-    st.header("Chat with PDF using OpenRouter 💁")
+# ── Sidebar ────────────────────────────────────────────────────────────────────
+with st.sidebar:
+    st.markdown('<div class="sidebar-title">◈ Document Upload</div>', unsafe_allow_html=True)
 
-    def clear_input():
-        st.session_state["user_question"] = ""
-        st.balloons()
+    pdf_docs = st.file_uploader(
+        "Drop PDF files here",
+        accept_multiple_files=True,
+        type=["pdf"],
+        label_visibility="visible"
+    )
 
-    st.text_input("Ask a Question from the PDF Files", key="user_question")
+    if pdf_docs:
+        st.markdown(f"""
+        <div style="
+            font-family:'Space Mono',monospace;
+            font-size:0.68rem;
+            color:#4a9a7a;
+            letter-spacing:0.08em;
+            margin: 0.5rem 0 1rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(0,180,100,0.06);
+            border: 1px solid rgba(0,180,100,0.15);
+            border-radius:4px;">
+            ✓ {len(pdf_docs)} file(s) loaded
+        </div>
+        """, unsafe_allow_html=True)
 
-    if st.button("Submit Question"):
-        if st.session_state.user_question:
-            user_input(st.session_state.user_question)
-        else:
-            st.warning("Please enter a question before submitting!")
+    st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
 
-    st.button("Clear", on_click=clear_input)
-
-    with st.sidebar:
-        st.title("Menu:")
-        pdf_docs = st.file_uploader(
-            "Upload your PDF Files and Click on the Submit & Process Button",
-            accept_multiple_files=True
-        )
-        if st.button("Submit & Process"):
-            with st.spinner("Processing..."):
+    if st.button("⬡  Process Documents"):
+        if pdf_docs:
+            with st.spinner("Indexing documents..."):
                 raw_text = get_pdf_text(pdf_docs)
                 text_chunks = get_text_chunks(raw_text)
                 get_vector_store(text_chunks)
-                st.success("Done")
+                st.success("Index built successfully.")
+        else:
+            st.warning("Upload at least one PDF first.")
+
+    st.markdown("""
+    <div style="
+        margin-top: 2.5rem;
+        padding-top: 1.2rem;
+        border-top: 1px solid rgba(0,180,255,0.1);
+        font-family:'Space Mono',monospace;
+        font-size:0.62rem;
+        color:#2a4a6a;
+        letter-spacing:0.08em;
+        line-height:1.8;">
+        STACK<br>
+        <span style="color:#3a6a8a;">
+        HuggingFace · FAISS<br>
+        OpenRouter · LangChain<br>
+        Streamlit · PyPDF2
+        </span>
+    </div>
+    """, unsafe_allow_html=True)
 
 
-if __name__ == "__main__":
-    main()
+# ── Main area ──────────────────────────────────────────────────────────────────
+def clear_input():
+    st.session_state["user_question"] = ""
+
+st.markdown("""
+<div style="
+    font-family:'Space Mono',monospace;
+    font-size:0.65rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:#2a5a7a;
+    margin-bottom:0.6rem;">
+    ◈ Ask a question
+</div>
+""", unsafe_allow_html=True)
+
+st.text_input(
+    "Query",
+    placeholder="What is this document about?",
+    key="user_question",
+    label_visibility="collapsed"
+)
+
+col1, col2 = st.columns([3, 1])
+with col1:
+    if st.button("⬡  Submit Question"):
+        if st.session_state.user_question:
+            with st.spinner("Retrieving answer..."):
+                user_input(st.session_state.user_question)
+        else:
+            st.warning("Enter a question first.")
+with col2:
+    st.button("✕  Clear", on_click=clear_input)
